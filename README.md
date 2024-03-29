@@ -2,7 +2,7 @@
 This repo is created to demonstrate the AWS codepipeline demo
 
 
-Codecommit Tools:
+# Codecommit Tools:
 
 Code commit repo cannot be managed with aws root user. We need to create the aws user for the same.
 
@@ -19,7 +19,7 @@ You will get the connection step on the same repo page.
 Just follow that and you should be able to push and pull code out of codecommit repo.
 
 
-CodeBuild
+# CodeBuild
 
 We have to create buildspec.yml 
 In builspec file we have to 2 things:-
@@ -30,7 +30,7 @@ In builspec file we have to 2 things:-
 
 below is the example
 
-$ cat buildspec.yml
+# cat buildspec.yml
 version: 0.2
 
 phases:
@@ -56,7 +56,7 @@ artifacts:
 
 
 
-codedeploy
+# codedeploy
 
 $ cat appspec.yml
 version: 0.0
