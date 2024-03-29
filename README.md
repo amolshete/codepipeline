@@ -2,116 +2,42 @@
 This repo is created to demonstrate the AWS codepipeline demo
 
 
-# Codecommit Tools:
+# AWS DevOps Workflow
 
-Code commit repo cannot be managed with aws root user. We need to create the aws user for the same.
+## CodeCommit Tools
 
-We can create the user from IAM service. Once user creation is done login with the new user in aws console.
+- CodeCommit repositories cannot be managed with the AWS root user.
+- Create an AWS IAM user specifically for CodeCommit management.
+- Use the IAM service to create the new user, then log in to the AWS console with the new user's credentials.
+- Search for the CodeCommit service in the AWS console and create a new repository.
+- Preferably, manage Git repositories using SSH.
+- Set up the CodeCommit connection following the documentation provided in the repository page.
+- Follow the connection steps to enable pushing and pulling code from the CodeCommit repository.
 
-Search for the codecommit service and then create new repo.
+## CodeBuild
 
-We generally prefer to handle the git repos with the ssh way.
+1. Create a `buildspec.yml` file for CodeBuild.
+2. In the `buildspec.yml`, include the following phases:
+   - **Install Phase:** Install all dependencies required for building the application.
+   - **Build Phase:** Provide the build command to build the application.
+   - **Post Build Phase:** Transfer the artifact to an S3 bucket. Ensure that the CodeBuild role has permissions to access the S3 bucket.
+3. Example `buildspec.yml` content:
 
-So that lets setup the codecommit connection with the help of documentation.
-
-You will get the connection step on the same repo page.
-
-Just follow that and you should be able to push and pull code out of codecommit repo.
-
-
-# CodeBuild
-
-We have to create buildspec.yml 
-In builspec file we have to 2 things:-
-
-1. In install phase install all dependecies for building of the application
-2. In build phase you have to provide the build command.
-3. In post build you will transfer the artifact to s3 bucket. because of this 3rd step you need to provide the s3 bucket permission in codebuild role
-
-below is the example
-
-# cat buildspec.yml
-version: 0.2
-
-phases:
-  install:
-    commands:
-       - sudo apt-get update
-       - sudo apt-get install maven -y
-       - mvn --version
-  build:
-    commands:
-       - mvn clean install -Dskiptests
-      # - command
-  post_build:
-     commands:
-        - echo "transfer the artifact..."
-        - aws s3 cp target/*.jar s3://demo-codebuild-latest-12324/app.jar
-      # - command
-artifacts:
-  files:
-     - '**/*'
-
-
-
-
-
-# codedeploy
-
-$ cat appspec.yml
-version: 0.0
-os: linux
-files:
-  - source: /
-    destination: /home/ubuntu/
-    overwrite: true
-permissions:
-  - object: /home/ubuntu/
-    pattern: "**"
-    owner: root
-    group: root
-    mode: 755
-hooks:
-  BeforeInstall:
-    - location: scripts/install_dependencies.sh
-      timeout: 300
-      runas: root
-  AfterInstall:
-    - location: scripts/start_server.sh
-      timeout: 300
-      runas: root
-
- 
- 
- 
-$ cat install_dependencies.sh
-#!/bin/bash
-
-sudo apt-get update
-sudo apt-get install openjdk-11-jdk -y
-
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-unzip awscliv2.zip
-sudo ./aws/install
-
-
-aws s3 cp s3://demo-codebuild-latest-12324/app.jar /home/ubuntu/app.jar
-
-
-
- 
-$ cat start_server.sh
-#!/bin/bash
-
-# Navigate to the directory where the JAR file is located
-cd /home/ubuntu/
-
-# Start the Java application
-java -jar app.jar > /var/log/app.log 2>&1 &
-
-
-
-
-https://towardsaws.com/anatomy-of-the-appspec-file-abadf06186ef
-
-https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file.html
+   ```yaml
+   version: 0.2
+   phases:
+     install:
+       commands:
+         - sudo apt-get update
+         - sudo apt-get install maven -y
+         - mvn --version
+     build:
+       commands:
+         - mvn clean install -DskipTests
+     post_build:
+       commands:
+         - echo "Transfer the artifact..."
+         - aws s3 cp target/*.jar s3://demo-codebuild-latest-12324/app.jar
+   artifacts:
+     files:
+       - '**/*'
