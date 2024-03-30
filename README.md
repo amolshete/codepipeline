@@ -16,12 +16,14 @@ This repo is created to demonstrate the AWS codepipeline demo
 
 ## CodeBuild
 
-1. Create a `buildspec.yml` file for CodeBuild.
-2. In the `buildspec.yml`, include the following phases:
+1. Go to AWS Codebuild service and create build project.
+2. You need to choose the source code either you can choose github or codecommit its up to you.
+3. Create a `buildspec.yml` file for CodeBuild.
+4. In the `buildspec.yml`, include the following phases:
    - **Install Phase:** Install all dependencies required for building the application.
    - **Build Phase:** Provide the build command to build the application.
    - **Post Build Phase:** Transfer the artifact to an S3 bucket. Ensure that the CodeBuild role has permissions to access the S3 bucket.
-3. Example `buildspec.yml` content:
+5. Example `buildspec.yml` content:
 
    ```yaml
    version: 0.2
