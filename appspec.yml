@@ -1,0 +1,21 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /home/ubuntu/
+    overwrite: true
+permissions:
+  - object: /home/ubuntu/
+    pattern: "**"
+    owner: root
+    group: root
+    mode: 755
+hooks:
+  BeforeInstall:
+    - location: scripts/install_dependencies.sh
+      timeout: 300
+      runas: root
+  AfterInstall:
+    - location: scripts/start_server.sh
+      timeout: 300
+      runas: root
