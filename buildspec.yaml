@@ -52,7 +52,7 @@ phases:
     #file-format: JunitXml | CucumberJson
 artifacts:
   files:
-     - target/spring-petclinic-2.7.0-SNAPSHOT.jar
+     - '**/*'
     # - location
   #name: $(date +%Y-%m-%d)
   #discard-paths: yes
