@@ -43,3 +43,28 @@ This repo is created to demonstrate the AWS codepipeline demo
    artifacts:
      files:
        - '**/*'
+
+## CodeDeploy
+
+In this project we are going to deploy the app on the EC2 machine.
+
+So for that create the EC2 machine first. Now in real time you might consider to create the EC2 machine with ASG service.
+
+While creating EC2 server keep below userdata which is installing the codedeploy agent which is necessary tool to be running on EC2.
+```
+#!/bin/bash
+
+exec > /home/ubuntu/userdata_output.txt 2>&1
+sudo apt update
+sudo apt install ruby-full -y
+sudo apt install wget
+cd /home/ubuntu
+wget https://aws-codedeploy-ap-south-1.s3.ap-south-1.amazonaws.com/latest/install
+chmod +x ./install
+sudo ./install auto
+
+systemctl status codedeploy-agent
+systemctl start codedeploy-agent
+systemctl status codedeploy-agent
+
+```
