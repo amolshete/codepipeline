@@ -130,3 +130,4 @@ cd /home/ubuntu/
 java -jar app.jar > /var/log/app.log 2>&1 &
 
 ```
+...
