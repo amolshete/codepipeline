@@ -41,7 +41,7 @@ phases:
   post_build:
     commands:
       - echo "Transfer the artifact..."
-      - aws s3 cp target/*.jar s3://codebuild-demo-project-27th-may/app.jar
+      - aws s3 cp target/*.jar s3://codebuild-demo-21st-june-2025/app.jar
 #reports:
   #report-name-or-arn:
     #files:
