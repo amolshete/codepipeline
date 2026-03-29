@@ -21,13 +21,13 @@ pipeline{
                     echo "======== build with maven execution failed========"
                 }
             }
-            stage("docker build"){
+        }
+        stage("docker build"){
                 steps{
                     echo "========executing docker build========"
                     sh "docker build -t $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG ."
                 }
             }
-        }
     }
     post{
         always{
