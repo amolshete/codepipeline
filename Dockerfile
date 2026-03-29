@@ -1,4 +1,4 @@
-From maven:latest
+FROM maven:latest
 WORKDIR /app
 COPY . /app
 RUN cd /app && mvn install -Dskiptests
