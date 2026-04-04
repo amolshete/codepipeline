@@ -1,5 +1,8 @@
 pipeline{
     agent any
+    tools {
+        maven 'maven-3.8.6'
+    }
     environment {
         DOCKER_IMAGE_NAME = "amol1996/springapp-4734348"
         DOCKER_IMAGE_TAG = "latest"
